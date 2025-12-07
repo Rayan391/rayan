@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Estratégia de Tráfego - Completo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET GERAL --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+        
+        /* Variáveis de Cores */
+        :root {
+            --azul-neon: #33CCFF;
+            --fundo-dobra3: #181818;
+            --fundo-dobra4: #050505;
+            --fundo-dobra5: #141414; /* Um tom levemente diferente para contraste */
+            --cinza-card: #121212;
+            --borda-suave: #2a2a2a;
+            --texto-cinza: #A1A1A1;
+        }
+
+        /* --- ESTILOS COMPARTILHADOS --- */
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .highlight { color: var(--azul-neon); }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 18px;
+            border: 1px solid #333;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 25px;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Botão Padrão */
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--azul-neon);
+            color: #000;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 18px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 30px rgba(51, 204, 255, 0.3);
+        }
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(51, 204, 255, 0.5);
+        }
+
+        .icon-circle {
+            background-color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+        .icon-arrow { width: 12px; height: 12px; fill: #000; }
+
+        /* =========================================
+           DOBRA 3 - VANTAGENS
+           ========================================= */
+        .dobra-vantagens {
+            width: 100%;
+            min-height: 760px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--fundo-dobra3);
+            padding: 80px 0;
+        }
+
+        .vantagens-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .left-content { flex: 1; max-width: 500px; }
+
+        .title-large {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 45px;
+        }
+
+        .right-content { flex: 1.4; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card-vantagem {
+            border: 1px solid var(--borda-suave);
+            border-radius: 20px;
+            padding: 35px 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: border-color 0.3s;
+        }
+        .card-vantagem:hover { border-color: #444; }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            background-color: var(--azul-neon);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+        .check-icon svg { width: 14px; height: 14px; fill: #000; }
+
+        .card-text { font-size: 16px; color: #d0d0d0; line-height: 1.5; }
+
+        /* =========================================
+           DOBRA 4 - PROCESSO
+           ========================================= */
+        .dobra-processo {
+            width: 100%;
+            min-height: 1133px;
+            background-color: var(--fundo-dobra4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .header-processo { text-align: center; margin-bottom: 60px; position: relative; z-index: 2; }
+        
+        .header-processo h2 {
+            font-size: 48px;
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+
+        .pills-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .pill-dark {
+            background-color: #121212;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .floating-cursor {
+            position: absolute;
+            bottom: -50px;
+            right: -60px;
+            width: 50px;
+            filter: drop-shadow(0 0 15px rgba(51, 204, 255, 0.4));
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+        .main-process-card {
+            background-color: var(--cinza-card);
+            border: 1px solid #252525;
+            border-radius: 50px;
+            padding: 80px;
+            width: 100%;
+            max-width: 1600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 80px 50px;
+        }
+
+        .step-item { display: flex; flex-direction: column; align-items: flex-start; }
+
+        .step-badge {
+            background-color: var(--azul-neon);
+            color: #000;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        .step-badge svg { width: 12px; height: 12px; fill: #000; }
+
+        .step-item h3 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .step-item p {
+            font-size: 17px;
+            color: var(--texto-cinza);
+            line-height: 1.65;
+            max-width: 95%;
+        }
+
+        .cta-card-box {
+            background: linear-gradient(160deg, #F5F7FA 0%, #D4E9F7 100%);
+            border-radius: 40px;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            box-shadow: 0 10px 40px rgba(51, 204, 255, 0.1);
+            height: 100%;
+        }
+
+        .cta-card-box h3 {
+            font-size: 36px;
+            color: #111;
+            margin-bottom: 35px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+        
+        .cta-card-box h3 span { color: #889096; }
+
+        .btn-cta-small {
+            background-color: var(--azul-neon);
+            color: #000;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 20px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-shadow: 0 0 25px rgba(51, 204, 255, 0.5);
+            transition: transform 0.2s;
+        }
+        .btn-cta-small:hover { transform: scale(1.02); }
+
+        /* =========================================
+           DOBRA 5 - FAQ (PERGUNTAS FREQUENTES)
+           ========================================= */
+        .dobra-faq {
+            width: 100%;
+            min-height: 825px;
+            background-color: var(--fundo-dobra5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 0 0 0; /* Padding top */
+        }
+
+        .faq-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 60px;
+            padding-bottom: 80px;
+        }
+
+        .faq-left {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .faq-title {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #fff;
+        }
+        .faq-title span { color: var(--azul-neon); }
+
+        .faq-right {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Estilo do Item Accordion */
+        .faq-item {
+            background-color: transparent;
+            border: 1px solid #333;
+            border-radius: 50px; /* Bordas bem arredondadas (Pill) */
+            padding: 25px 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .faq-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            color: #fff;
+            font-weight: 300;
+            transition: transform 0.3s;
+        }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+        }
+
+        .faq-body p {
+            font-size: 16px;
+            color: var(--texto-cinza);
+            line-height: 1.6;
+            margin-top: 0;
+        }
+
+        /* Estado ATIVO (Aberto) */
+        .faq-item.active {
+            border-radius: 30px; /* Levemente menos arredondado quando aberto para parecer um card */
+            background-color: rgba(255, 255, 255, 0.02);
+            border-color: #444;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--azul-neon);
+        }
+
+        .faq-item.active .faq-body {
+            max-height: 200px; /* Altura suficiente para o texto */
+            margin-top: 15px;
+        }
+
+        /* RODAPÉ */
+        footer {
+            width: 100%;
+            border-top: 1px solid #222;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            background-color: var(--fundo-dobra5);
+        }
+        
+        footer strong { color: #888; }
+
+        /* --- RESPONSIVIDADE GERAL --- */
+        @media (max-width: 1200px) {
+            .container { padding: 0 30px; }
+            .vantagens-content { flex-direction: column; text-align: center; }
+            .left-content { max-width: 100%; margin-bottom: 40px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .main-process-card { grid-template-columns: repeat(2, 1fr); padding: 50px; }
+            .faq-wrapper { flex-direction: column; }
+            .faq-left { max-width: 100%; margin-bottom: 40px; text-align: center; }
+            .faq-right { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .main-process-card { grid-template-columns: 1fr; padding: 30px; }
+            .title-large, .header-processo h2, .faq-title { font-size: 32px; }
+            .pills-container { flex-direction: column; }
+            .floating-cursor { display: none; }
+            .faq-item { padding: 20px; border-radius: 30px; }
+            .faq-question { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================
+         DOBRA 3: VANTAGENS
+         ========================================= -->
+    <section class="dobra-vantagens">
+        <div class="container vantagens-content">
+            <div class="left-content">
+                <span class="tag">Vantagens</span>
+                <h2 class="title-large">
+                    Minha estratégia de tráfego é a <span class="highlight">solução ideal</span> para você que...
+                </h2>
+                <a href="#" class="btn-cta">
+                    QUERO ATRAIR MAIS CLIENTES
+                    <div class="icon-circle">
+                        <svg class="icon-arrow" viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg>
+                    </div>
+                </a>
+            </div>
+            <div class="right-content">
+                <div class="cards-grid">
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Deseja ver um retorno claro e mensurável do seu investimento em marketing.</p>
+                    </div>
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Valoriza a transparência e deseja entender exatamente como suas campanhas estão performando.</p>
+                    </div>
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Está cansado de campanhas genéricas que não atendem às especificidades do seu mercado.</p>
+                    </div>
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Busca um parceiro estratégico, não apenas um prestador de serviços.</p>
+                    </div>
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Precisa de mais do que apenas visitas ao site, buscando conversões reais que aumentem o faturamento.</p>
+                    </div>
+                    <div class="card-vantagem">
+                        <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <p class="card-text">Quer garantir que seu marketing digital seja sustentável e continue a crescer sem aumentar proporcionalmente os custos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         DOBRA 4: PROCESSO
+         ========================================= -->
+    <section class="dobra-processo">
+        <div class="container">
+            <div class="header-processo">
+                <span class="tag">Processo</span>
+                <h2>Seu negócio está <span class="highlight">a um clique</span> de ter:</h2>
+                <div class="pills-container">
+                    <div class="pill-dark">+ Vendas</div>
+                    <div class="pill-dark">+ Clientes</div>
+                    <div class="pill-dark">+ Faturamento</div>
+                    <svg class="floating-cursor" viewBox="0 0 34 34" fill="none">
+                        <path d="M11.5 31L13.5 17.5L2 15L15.5 2L21 21.5L16.5 23L22.5 31L19.5 33L13.5 25L11.5 31Z" fill="#33CCFF" stroke="black" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="main-process-card">
+                <div class="step-item">
+                    <div class="step-badge"><svg viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg> #01</div>
+                    <h3>Diagnóstico inicial:</h3>
+                    <p>Analisamos seu negócio e identificamos oportunidades. Compreendemos suas metas e preparamos o terreno para o sucesso.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-badge"><svg viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg> #02</div>
+                    <h3>Planejamento estratégico:</h3>
+                    <p>Criamos uma estratégia personalizada, selecionando os canais de tráfego ideais e definindo um orçamento eficaz para maximizar seus resultados.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-badge"><svg viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg> #03</div>
+                    <h3>Rastreamento de dados e automação:</h3>
+                    <p>Utilizamos tecnologia avançada para monitorar e ajustar suas campanhas em tempo real, garantindo que cada passo seja otimizado.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-badge"><svg viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg> #04</div>
+                    <h3>Implementação e monitoramento:</h3>
+                    <p>Configuramos e gerenciamos suas campanhas, fazendo ajustes contínuos baseados em desempenho para aumentar a eficácia.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-badge"><svg viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg> #05</div>
+                    <h3>Relatórios e suporte:</h3>
+                    <p>Fornecemos relatórios claros e oferecemos suporte constante para manter você informado e no controle de suas estratégias.</p>
+                </div>
+                <div class="cta-card-box">
+                    <h3>Pronto para <span>escalar suas vendas?</span></h3>
+                    <a href="#" class="btn-cta-small">
+                        QUERO ATRAIR MAIS CLIENTES
+                        <div class="icon-circle" style="width: 28px; height: 28px;">
+                            <svg class="icon-arrow" viewBox="0 0 14 14"><path d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         DOBRA 5: FAQ (PERGUNTAS FREQUENTES)
+         ========================================= -->
+    <section class="dobra-faq">
+        <div class="container">
+            <div class="faq-wrapper">
+                
+                <!-- Coluna Esquerda: Título -->
+                <div class="faq-left">
+                    <span class="tag">FAQ</span>
+                    <h2 class="faq-title">
+                        Perguntas <br>
+                        <span class="highlight">Frequentes</span>
+                    </h2>
+                </div>
+
+                <!-- Coluna Direita: Lista Accordion -->
+                <div class="faq-right">
+                    
+                    <!-- Item 1 (Aberto por padrão na imagem) -->
+                    <div class="faq-item active">
+                        <div class="faq-header">
+                            <span class="faq-question">Como a gestão de tráfego aumenta meu faturamento?</span>
+                            <span class="faq-icon">−</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Focamos em converter visitantes em clientes, otimizando cada campanha para maximizar seu retorno. Utilizamos estratégias de funil para garantir que o cliente certo chegue até você.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span class="faq-question">Quem se beneficia mais com seus serviços?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Nossos serviços são ideais para negócios que buscam escala, desde e-commerces até prestadores de serviços que precisam de leads qualificados recorrentes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span class="faq-question">Qual o diferencial do seu serviço?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Não entregamos apenas cliques, entregamos inteligência de dados. Trabalhamos com análise preditiva e otimização contínua para garantir o ROI.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span class="faq-question">Como funciona o monitoramento das campanhas?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Monitoramos 24/7. Você terá acesso a relatórios transparentes e reuniões periódicas para entender exatamente onde seu dinheiro está sendo investido.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span class="faq-question">E se os resultados não atenderem às expectativas?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Trabalhamos com metas claras. Se algo sair do planejado, nossa equipe age rapidamente para ajustar a rota e recuperar a performance.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span class="faq-question">Serve para qualquer negócio?</span>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-body">
+                            <p>Atendemos a maioria dos nichos, desde que haja validação do produto/serviço. Fazemos uma análise prévia para garantir que podemos gerar resultado.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- RODAPÉ -->
+        <footer>
+            <p>Copyright © 2024 Wagner Cesar. <strong>Todos os direitos reservados.</strong></p>
+        </footer>
+    </section>
+
+    <!-- SCRIPT PARA O ACCORDION -->
+    <script>
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Se o item clicado já estiver ativo, ele fecha.
+                // Se não estiver, fechamos todos os outros e abrimos este.
+                const isActive = item.classList.contains('active');
+
+                // Fecha todos
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.faq-icon').textContent = '+';
+                });
+
+                // Se não estava ativo antes, abre agora
+                if (!isActive) {
+                    item.classList.add('active');
+                    item.querySelector('.faq-icon').textContent = '−'; // Símbolo de menos
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
